@@ -688,6 +688,7 @@ class RigidObject(BaseRigidObject):
         # Set into simulation, note that when updating "model" properties with PhysX we need to do it on CPU.
         cpu_env_ids = self._get_cpu_env_ids(env_ids)
         wp.copy(self._cpu_body_mass, self.data._body_mass)
+        wp.synchronize_stream(self.device)
         self.root_view.set_masses(self._cpu_body_mass, indices=cpu_env_ids)
 
     def set_masses_mask(
@@ -772,6 +773,7 @@ class RigidObject(BaseRigidObject):
         # Set into simulation, note that when updating "model" properties with PhysX we need to do it on CPU.
         cpu_env_ids = self._get_cpu_env_ids(env_ids)
         wp.copy(self._cpu_body_coms, self.data._body_com_pose_b.data)
+        wp.synchronize_stream(self.device)
         self.root_view.set_coms(self._cpu_body_coms, indices=cpu_env_ids)
 
     def set_coms_mask(
@@ -856,6 +858,7 @@ class RigidObject(BaseRigidObject):
         # Set into simulation, note that when updating "model" properties with PhysX we need to do it on CPU.
         cpu_env_ids = self._get_cpu_env_ids(env_ids)
         wp.copy(self._cpu_body_inertia, self.data._body_inertia)
+        wp.synchronize_stream(self.device)
         self.root_view.set_inertias(self._cpu_body_inertia.flatten(), indices=cpu_env_ids)
 
     def set_inertias_mask(
